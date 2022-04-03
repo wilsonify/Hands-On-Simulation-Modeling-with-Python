@@ -1,25 +1,29 @@
 import mdptoolbox.example
+def test_smoke():
+    print("fire?")
 
-P, R = mdptoolbox.example.forest()
-
-print(P[0])
-print(P[1])
-
-print(R[:,0])
-print(R[:,1])
-
-gamma=0.9
-
-PolIterModel = mdptoolbox.mdp.PolicyIteration(P, R, gamma)
-
-PolIterModel.run()
-
-print(PolIterModel.V)
-
-print(PolIterModel.policy)
-
-print(PolIterModel.iter)
-
-print(PolIterModel.time)
-
-
+def test_tfm():
+    P, R = mdptoolbox.example.forest()
+    
+    print(P[0])
+    print(P[1])
+    
+    print(R[:,0])
+    print(R[:,1])
+    
+    gamma=0.9
+    
+    PolIterModel = mdptoolbox.mdp.PolicyIteration(P, R, gamma)
+    
+    PolIterModel.run()
+    
+    print(PolIterModel.V)
+    
+    print(PolIterModel.policy)
+    
+    print(PolIterModel.iter)
+    
+    print(PolIterModel.time)
+    
+    
+    

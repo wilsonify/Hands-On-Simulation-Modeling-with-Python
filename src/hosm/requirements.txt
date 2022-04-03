@@ -1,0 +1,8 @@
+numpy
+matplotlib
+mdptoolbox
+pymdptoolbox
+pandas
+pandas-datareader
+scikit-learn
+seaborn
