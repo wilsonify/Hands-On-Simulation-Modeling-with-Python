@@ -6,3 +6,5 @@ pandas
 pandas-datareader
 scikit-learn
 seaborn
+tensorflow
+keras
