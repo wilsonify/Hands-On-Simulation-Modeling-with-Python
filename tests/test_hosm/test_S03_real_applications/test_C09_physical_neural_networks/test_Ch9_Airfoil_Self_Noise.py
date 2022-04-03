@@ -1,4 +1,8 @@
+import os.path
+
 import pandas as pd
+
+path_to_here = os.path.abspath(os.path.dirname(__file__))
 
 def test_smoke():
     print("fire?")
@@ -7,7 +11,7 @@ def test_afsn():
 
     ASNNames= ['Frequency','AngleAttack','ChordLength','FSVelox','SSDT','SSP']
     
-    ASNData = pd.read_csv('airfoil_self_noise.dat', delim_whitespace=True, names=ASNNames)
+    ASNData = pd.read_csv(f'{path_to_here}/airfoil_self_noise.dat', delim_whitespace=True, names=ASNNames)
     
     print(ASNData.head(20))
     
