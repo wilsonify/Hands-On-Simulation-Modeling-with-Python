@@ -1,4 +1,8 @@
 import numpy as np
+
+def test_smoke():
+    print("fire?")
+    
 a = 75
 c = 0
 m = 2**(31) -1
