@@ -1,8 +1,15 @@
 import os.path
 
+import matplotlib.pyplot as plt
 import pandas as pd
-from keras.models import Sequential
 from keras.layers import Dense
+from keras.models import Sequential
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 
 path_to_here = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,8 +31,6 @@ def test_kr():
     summary = summary.transpose()
     print(summary)
 
-    from sklearn.preprocessing import MinMaxScaler
-
     scaler = MinMaxScaler()
     print(scaler.fit(ASNData))
     ASNDataScaled = scaler.fit_transform(ASNData)
@@ -35,7 +40,6 @@ def test_kr():
     summary = summary.transpose()
     print(summary)
 
-    import matplotlib.pyplot as plt
     boxplot = ASNDataScaled.boxplot(column=ASNNames)
     plt.show()
 
@@ -63,7 +67,6 @@ def test_kr():
     print('Y test shape = ', Y_test.shape)
 
     # Linear Regression
-    from sklearn.linear_model import LinearRegression
 
     LModel = LinearRegression()
     LModel.fit(X_train, Y_train)
@@ -71,9 +74,6 @@ def test_kr():
     Y_predLM = LModel.predict(X_test)
 
     # MLP Regressor Model
-    from sklearn.neural_network import MLPRegressor
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.pipeline import make_pipeline
 
     MLPRegModel = make_pipeline(StandardScaler(),
                                 MLPRegressor(hidden_layer_sizes=(100, 100),
@@ -85,8 +85,6 @@ def test_kr():
 
     print('SKLearn Neural Network Model')
     print(MLPRegModel.score(X_test, Y_test))
-
-    from sklearn.metrics import mean_squared_error
 
     MseMLP = mean_squared_error(Y_test, Y_predMLPReg)
     print('SKLearn Neural Network Model')
