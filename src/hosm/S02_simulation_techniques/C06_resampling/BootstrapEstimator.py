@@ -1,32 +1,32 @@
 import random
-import numpy as np 
+import numpy as np
 import matplotlib.pyplot as plt
 
-PopData = list()
+if __name__ == "__main__":
 
-random.seed(7)
+    PopData = list()
 
-for i in range(1000):
-    DataElem = 50 * random.random()
-    PopData.append(DataElem)
-    
+    random.seed(7)
 
-PopSample = random.choices(PopData, k=100)
+    for i in range(1000):
+        DataElem = 50 * random.random()
+        PopData.append(DataElem)
 
-PopSampleMean = list()
-for i in range(10000):  
-    SampleI = random.choices(PopData, k=100)
-    PopSampleMean.append(np.mean(SampleI))
+    PopSample = random.choices(PopData, k=100)
 
-plt.hist(PopSampleMean)
-plt.show()
+    PopSampleMean = list()
+    for i in range(10000):
+        SampleI = random.choices(PopData, k=100)
+        PopSampleMean.append(np.mean(SampleI))
 
-MeanPopSampleMean = np.mean(PopSampleMean)
-print("The mean of the Bootstrap estimator is ",MeanPopSampleMean)
+    plt.hist(PopSampleMean)
+    plt.show()
 
-MeanPopData = np.mean(PopData)
-print("The mean of the population is ",MeanPopData)
+    MeanPopSampleMean = np.mean(PopSampleMean)
+    print("The mean of the Bootstrap estimator is ", MeanPopSampleMean)
 
-MeanPopSample = np.mean(PopSample)
-print("The mean of the simple random sample is ",MeanPopSample)
+    MeanPopData = np.mean(PopData)
+    print("The mean of the population is ", MeanPopData)
 
+    MeanPopSample = np.mean(PopSample)
+    print("The mean of the simple random sample is ", MeanPopSample)

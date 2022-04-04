@@ -1,22 +1,24 @@
 import mdptoolbox.example
-P, R = mdptoolbox.example.forest(3,4,2,0.8)
 
-print(P[0])
-print(P[1])
+if __name__ == "__main__":
+    P, R = mdptoolbox.example.forest(3, 4, 2, 0.8)
 
-print(R[:,0])
-print(R[:,1])
+    print(P[0])
+    print(P[1])
 
-gamma=0.9
+    print(R[:, 0])
+    print(R[:, 1])
 
-PolIterModel = mdptoolbox.mdp.PolicyIteration(P, R, gamma)
+    gamma = 0.9
 
-PolIterModel.run()
+    PolIterModel = mdptoolbox.mdp.PolicyIteration(P, R, gamma)
 
-print(PolIterModel.V)
+    PolIterModel.run()
 
-print(PolIterModel.policy)
+    print(PolIterModel.V)
 
-print(PolIterModel.iter)
+    print(PolIterModel.policy)
 
-print(PolIterModel.time)
+    print(PolIterModel.iter)
+
+    print(PolIterModel.time)

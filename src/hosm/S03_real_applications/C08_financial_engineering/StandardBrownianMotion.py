@@ -1,21 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.random.seed(4)
+if __name__ == "__main__":
 
-n = 1000
+    np.random.seed(4)
 
-SQN = 1/np.math.sqrt(n)
+    n = 1000
 
-ZValues = np.random.randn(n)
+    SQN = 1 / np.math.sqrt(n)
 
-Yk = 0
+    ZValues = np.random.randn(n)
 
-SBMotion=list()
+    Yk = 0
 
-for k in range(n):
-    Yk = Yk + SQN*ZValues[k]
-    SBMotion.append(Yk)
+    SBMotion = list()
 
-plt.plot(SBMotion)
-plt.show()
+    for k in range(n):
+        Yk = Yk + SQN * ZValues[k]
+        SBMotion.append(Yk)
+
+    plt.plot(SBMotion)
+    plt.show()
