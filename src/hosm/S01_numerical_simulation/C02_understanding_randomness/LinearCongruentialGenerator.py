@@ -30,14 +30,17 @@ Here is the Python code that allowed us to generate that sequence of numbers:
 import numpy as np
 
 
-def LCG(x):
+def LCG(max_iter=1000):
     a = 2
     c = 4
     m = 5
-    x = np.mod((a * x + c), m)
-    return x
+    x = 3
+    for _ in range(max_iter):
+        x = np.mod((a * x + c), m)
+        yield x
 
 
 if __name__ == "__main__":
-    for i in range(1, 17):
-        print(LCG(i))
+    generator = LCG()
+    for _ in range(1, 17):
+        print(next(generator))
