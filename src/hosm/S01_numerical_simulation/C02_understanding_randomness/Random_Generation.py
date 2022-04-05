@@ -1,5 +1,20 @@
 import random
 
+CitiesList = [
+    'Rome',
+    'New York',
+    'London',
+    'Berlin',
+    'Moskov',
+    'Los Angeles',
+    'Paris',
+    'Madrid',
+    'Tokio',
+    'Toronto'
+]
+
+DataList = range(10, 100, 10)
+
 if __name__ == "__main__":
 
     for i in range(20):
@@ -24,13 +39,10 @@ if __name__ == "__main__":
         print(random.randrange(0, 100, 5), end=' ')
     print()
 
-    CitiesList = ['Rome', 'New York', 'London', 'Berlin', 'Moskov', 'Los Angeles', 'Paris', 'Madrid', 'Tokio',
-                  'Toronto']
     for i in range(10):
         CitiesItem = random.choice(CitiesList)
         print("Randomly selected item from Cities list is - ", CitiesItem)
 
-    DataList = range(10, 100, 10)
     print("Initial Data List = ", DataList)
     DataSample = random.sample(DataList, k=5)
     print("Sample Data List = ", DataSample)
