@@ -1,3 +1,18 @@
+"""
+Introducing the random module
+The random module implements PRNGs for various distributions.
+The random module is based on the Mersenne Twister algorithm,
+which was originally developed to produce inputs for Monte Carlo simulations.
+The Mersenne Twister algorithm is a PRNG that produces almost uniform numbers suitable for a wide range of applications.
+It is important to note that random numbers are generated using repeatable and predictable deterministic algorithms.
+They begin with a certain seed value and, every time we ask for a new number, we get one based on the current seed.
+The seed is an attribute of the generator.
+If we invoke the generator twice with the same seed,
+the sequence of numbers that will be generated starting from that seed will always be the same.
+However, these numbers will be evenly distributed.
+Let's analyze, in detail, the functions contained in the module through a series of practical examples.
+"""
+
 import random
 
 CitiesList = [
