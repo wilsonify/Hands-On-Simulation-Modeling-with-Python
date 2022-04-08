@@ -67,6 +67,64 @@ it may take longer to find the minimum.
 This method is easily implemented in Python using the minimize routine of the SciPy optimize module.
 Let's look at a simple example of using this method:
 
+
+Powell's conjugate direction algorithm
+
+Conjugate direction methods were originally introduced as iterative methods for
+solving linear systems with a symmetric and positive definite coefficient matrix,
+and for minimizing strictly convex quadratic functions.
+
+The main feature of conjugated direction methods for minimizing quadratic functions is that of generating,
+in a simple way, a set of directions that, in addition to being linearly independent,
+enjoy the further important property of being mutually conjugated.
+
+The idea of Powell's method is that if the minimum of a quadratic function
+is found along each of the p(p < n) directions in a stage of the research,
+then when taking a step along each direction,
+the final displacement from the beginning up to the p-th step is conjugated with respect
+to all the p subdirections of research.
+
+For example,
+if points 1 and 2 are obtained from one-dimensional searches in the same direction but from different starting points,
+then the line formed by 1 and 2 will be directed toward the maximum.
+
+The directions represented by these lines are called conjugate directions.
+
+
+The minimize() routine from the SciPy optimize package contains numerous methods
+for unconstrained and constrained minimization.
+
+We analyzed some of them in detail in the previous sections.
+In the following list, we have summarized the most used methods provided by the package:
+
+• Newton-Broyden-Fletcher-Goldfarb-Shanno (BFGS):
+This is an iterative unconstrained optimization method used to solve nonlinear problems.
+This method looks for the points where the first derivative is zero.
+
+• Conjugate Gradient (CG):
+This method belongs to the family of conjugate gradient algorithms and performs a
+minimization of the scalar function of one or more variables.
+This method requires that the system matrix be symmetric and positive definite.
+
+• Dog-leg trust-region (dogleg):
+The method first defines a region around the current best solution,
+where the original objective function can be approximated.
+The algorithm therefore takes a step forward within the region.
+
+• Newton-CG:
+This method is also called truncated Newton's method.
+It is a method that identifies the direction of research by adopting a procedure based on the conjugate gradient,
+to roughly minimize the quadratic function.
+
+• Limited-memory BFGS (L-BFGS):
+This is part of the family of quasi-Newton methods.
+It uses the BFGS method for systematically saving computer memory
+
+• Constrained Optimization By Linear Approximation (COBYLA):
+The operating mechanism is iterative and uses the principles of linear programming
+to refine the solution found in the previous step.
+Convergence is achieved by progressively reducing the pace.
+
 """
 import numpy as np
 from scipy.optimize import minimize
