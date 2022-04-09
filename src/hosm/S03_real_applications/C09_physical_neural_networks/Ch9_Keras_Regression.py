@@ -1,4 +1,15 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import mean_squared_error
+from keras.models import Sequential
+from keras.layers import Dense
 
 if __name__ == "__main__":
     ASNNames = ['Frequency', 'AngleAttack', 'ChordLength', 'FSVelox', 'SSDT', 'SSP']
@@ -13,8 +24,6 @@ if __name__ == "__main__":
     summary = summary.transpose()
     print(summary)
 
-    from sklearn.preprocessing import MinMaxScaler
-
     scaler = MinMaxScaler()
     print(scaler.fit(ASNData))
     ASNDataScaled = scaler.fit_transform(ASNData)
@@ -23,8 +32,6 @@ if __name__ == "__main__":
     summary = ASNDataScaled.describe()
     summary = summary.transpose()
     print(summary)
-
-    import matplotlib.pyplot as plt
 
     boxplot = ASNDataScaled.boxplot(column=ASNNames)
     plt.show()
@@ -39,8 +46,6 @@ if __name__ == "__main__":
     plt.colorbar()
     plt.show()
 
-    from sklearn.model_selection import train_test_split
-
     X = ASNDataScaled.drop('SSP', axis=1)
     print('X shape = ', X.shape)
     Y = ASNDataScaled['SSP']
@@ -53,7 +58,6 @@ if __name__ == "__main__":
     print('Y test shape = ', Y_test.shape)
 
     # Linear Regression
-    from sklearn.linear_model import LinearRegression
 
     LModel = LinearRegression()
     LModel.fit(X_train, Y_train)
@@ -61,9 +65,6 @@ if __name__ == "__main__":
     Y_predLM = LModel.predict(X_test)
 
     # MLP Regressor Model
-    from sklearn.neural_network import MLPRegressor
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.pipeline import make_pipeline
 
     MLPRegModel = make_pipeline(StandardScaler(),
                                 MLPRegressor(hidden_layer_sizes=(100, 100),
@@ -76,16 +77,11 @@ if __name__ == "__main__":
     print('SKLearn Neural Network Model')
     print(MLPRegModel.score(X_test, Y_test))
 
-    from sklearn.metrics import mean_squared_error
-
     MseMLP = mean_squared_error(Y_test, Y_predMLPReg)
     print('SKLearn Neural Network Model')
     print(MseMLP)
 
     # Keras Model
-
-    from keras.models import Sequential
-    from keras.layers import Dense
 
     model = Sequential()
     model.add(Dense(20, input_dim=5, activation='relu'))
