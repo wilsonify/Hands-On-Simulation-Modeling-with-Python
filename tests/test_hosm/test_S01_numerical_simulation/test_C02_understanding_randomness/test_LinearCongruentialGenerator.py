@@ -1,14 +1,16 @@
 import numpy as np
+from hosm.S01_numerical_simulation.C02_understanding_randomness.LinearCongruentialGenerator import (
+    LCG,
+)
+
 
 def test_smoke():
     print("fire?")
 
-def test_lcg():
-    a = 2
-    c = 4
-    m = 5
-    x  = 3
 
-    for i in range(1,17):
-        x= np.mod((a*x+c),m)
-        print(x)
+def test_lcg():
+    result = []
+    generator = LCG()
+    for _ in range(1, 17):
+        result += [round(next(generator), 2)]
+    assert result == [0, 4, 2, 3, 0, 4, 2, 3, 0, 4, 2, 3, 0, 4, 2, 3]
