@@ -1,118 +1,53 @@
-import pandas as pd
 import matplotlib.pyplot as plt
-
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
-from sklearn.metrics import mean_squared_error
-from keras.models import Sequential
 from keras.layers import Dense
+from keras.models import Sequential
 
-if __name__ == "__main__":
-    ASNNames = ['Frequency', 'AngleAttack', 'ChordLength', 'FSVelox', 'SSDT', 'SSP']
+from hosm.S03_real_applications.C09_physical_neural_networks.Ch9_Airfoil_Self_Noise import (
+    read_ASNData,
+    split_data
+)
 
-    ASNData = pd.read_csv('airfoil_self_noise.dat', delim_whitespace=True, names=ASNNames)
 
-    print(ASNData.head(20))
-
-    print(ASNData.info())
-
-    summary = ASNData.describe()
-    summary = summary.transpose()
-    print(summary)
-
-    scaler = MinMaxScaler()
-    print(scaler.fit(ASNData))
-    ASNDataScaled = scaler.fit_transform(ASNData)
-    ASNDataScaled = pd.DataFrame(ASNDataScaled, columns=ASNNames)
-
-    summary = ASNDataScaled.describe()
-    summary = summary.transpose()
-    print(summary)
-
-    boxplot = ASNDataScaled.boxplot(column=ASNNames)
-    plt.show()
-
-    CorASNData = ASNDataScaled.corr(method='pearson')
-    with pd.option_context('display.max_rows', None, 'display.max_columns', CorASNData.shape[1]):
-        print(CorASNData)
-
-    plt.matshow(CorASNData)
-    plt.xticks(range(len(CorASNData.columns)), CorASNData.columns)
-    plt.yticks(range(len(CorASNData.columns)), CorASNData.columns)
-    plt.colorbar()
-    plt.show()
-
-    X = ASNDataScaled.drop('SSP', axis=1)
-    print('X shape = ', X.shape)
-    Y = ASNDataScaled['SSP']
-    print('Y shape = ', Y.shape)
-
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=5)
-    print('X train shape = ', X_train.shape)
-    print('X test shape = ', X_test.shape)
-    print('Y train shape = ', Y_train.shape)
-    print('Y test shape = ', Y_test.shape)
-
-    # Linear Regression
-
-    LModel = LinearRegression()
-    LModel.fit(X_train, Y_train)
-
-    Y_predLM = LModel.predict(X_test)
-
-    # MLP Regressor Model
-
-    MLPRegModel = make_pipeline(StandardScaler(),
-                                MLPRegressor(hidden_layer_sizes=(100, 100),
-                                             tol=1e-5, max_iter=1000, random_state=0))
-
-    MLPRegModel.fit(X_train, Y_train)
-
-    Y_predMLPReg = MLPRegModel.predict(X_test)
-
-    print('SKLearn Neural Network Model')
-    print(MLPRegModel.score(X_test, Y_test))
-
-    MseMLP = mean_squared_error(Y_test, Y_predMLPReg)
-    print('SKLearn Neural Network Model')
-    print(MseMLP)
-
+def keras_fit(X_train, Y_train):
     # Keras Model
-
     model = Sequential()
     model.add(Dense(20, input_dim=5, activation='relu'))
     model.add(Dense(10, activation='relu'))
     model.add(Dense(1, activation='linear'))
     model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
     model.fit(X_train, Y_train, epochs=1000, verbose=1)
-
     model.summary()
+    return model
 
+
+def keras_predict(model, X_test):
     Y_predKM = model.predict(X_test)
+    return Y_predKM
 
+
+def keras_compare(model, X_test, Y_test):
     score = model.evaluate(X_test, Y_test, verbose=0)
-
     print('Keras Model')
     print(score[0])
+    return score
 
+
+def plot_predicted_vs_actual(Y_test, Y_pred, title="model"):
+    # Plot a comparison diagram
     plt.figure(1)
-    plt.subplot(121)
-    plt.scatter(Y_test, Y_predMLPReg)
+    plt.subplot(111)
+    plt.scatter(Y_test, Y_pred)
+    plt.plot((0, 1), "r--")
     plt.xlabel("Actual values")
     plt.ylabel("Predicted values")
-    plt.title("SKLearn Neural Network Model")
+    plt.title(title)
 
-    plt.subplot(122)
-    plt.scatter(Y_test, Y_predLM)
-    plt.xlabel("Actual values")
-    plt.ylabel("Predicted values")
-    plt.title("SKLearn Linear Regression Model")
-    plt.show()
 
-    MseLM = mean_squared_error(Y_test, Y_predLM)
-    print('Linear Regression Model')
-    print(MseLM)
+if __name__ == "__main__":
+    ASNData = read_ASNData()
+    X_train, X_test, Y_train, Y_test = split_data(ASNData)
+
+    km = keras_fit(X_train, Y_train)
+    Y_predKM = keras_predict(km, X_test)
+
+    plot_predicted_vs_actual(Y_test, Y_predKM, title="Keras Model")
