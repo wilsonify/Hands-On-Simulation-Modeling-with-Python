@@ -1,6 +1,5 @@
 numpy
 matplotlib
-mdptoolbox
 pymdptoolbox
 pandas
 pandas-datareader
