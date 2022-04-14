@@ -1,77 +1,41 @@
 import os.path
-
+import pytest
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from pandas.plotting import register_matplotlib_converters
+from hosm.S03_real_applications.C08_financial_engineering.AmazonStockMontecarloSimulation import (
+    read_amzn_from_csv,
+    LogReturns,
+    amazon_trend,
+    sim_stockprice
 
-path_to_here=os.path.abspath(os.path.dirname(__file__))
+)
+
+path_to_here = os.path.abspath(os.path.dirname(__file__))
+
 
 def test_smoke():
     print("fire?")
 
-def test_smcs():
-    register_matplotlib_converters()
-    AmznData = pd.read_csv(f'{path_to_here}/AMZN.csv',header=0, usecols=['Date', 'Close'],parse_dates=True,index_col='Date')
-    print(AmznData.info())
-    print(AmznData.head())
-    print(AmznData.tail())
-    print(AmznData.describe())
-    
-    plt.figure(figsize=(10,5))
-    plt.plot(AmznData)
-    plt.show()
 
-    AmznDataPctChange = AmznData.pct_change()
-
-    AmznLogReturns = np.log(1 + AmznDataPctChange)
-    print(AmznLogReturns.tail(10))
-
-    plt.figure(figsize=(10,5))
-    plt.plot(AmznLogReturns)
-    plt.show()
-
-    MeanLogReturns = np.array(AmznLogReturns.mean())
-
-    VarLogReturns = np.array(AmznLogReturns.var())
-
-    StdevLogReturns = np.array(AmznLogReturns.std())
+@pytest.fixture(name="AmznData")
+def test_read_amzn_from_csv():
+    AmznData = read_amzn_from_csv()
+    return AmznData
 
 
-    Drift = MeanLogReturns - (0.5 * VarLogReturns)
-    print("Drift = ",Drift)
-
-    NumIntervals = 2518
-
-    Iterations = 20
-
-    np.random.seed(7)
-    SBMotion = norm.ppf(np.random.rand(NumIntervals, Iterations))
+def test_LogReturns(AmznData):
+    AmznLogReturns = LogReturns(AmznData)
+    assert AmznLogReturns.shape == (2518, 1)
 
 
-
-    DailyReturns = np.exp(Drift + StdevLogReturns * SBMotion)
-
-
-    StartStockPrices = AmznData.iloc[0]
-
-    StockPrice = np.zeros_like(DailyReturns)
-
-    StockPrice[0] = StartStockPrices
-
-    for t in range(1, NumIntervals):
-
-        StockPrice[t] = StockPrice[t - 1] * DailyReturns[t]
+def test_amazon_trend(AmznData):
+    amzn_trend = amazon_trend(AmznData)
+    assert amzn_trend.shape == (2518, 1)
 
 
-
-    plt.figure(figsize=(10,5))
-
-    plt.plot(StockPrice)
-
-    AMZNTrend = np.array(AmznData.iloc[:, 0:1])
-
-    plt.plot(AMZNTrend,'k*')
-
-    plt.show()
+def test_sim_stockprice(AmznData):
+    sp = sim_stockprice(AmznData)
+    assert sp.shape == (2518, 20)
