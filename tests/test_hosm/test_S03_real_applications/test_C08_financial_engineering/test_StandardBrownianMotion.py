@@ -1,27 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from hosm.S03_real_applications.C08_financial_engineering.StandardBrownianMotion import sbm
+
+
 def test_smoke():
     print("fire?")
 
-def test_sbm():
 
-    np.random.seed(4)
-    
-    n = 1000
-    
-    SQN = 1/np.math.sqrt(n)
-    
-    ZValues = np.random.randn(n)
-    
-    Yk = 0
-    
-    SBMotion=list()
-    
-    for k in range(n):
-        Yk = Yk + SQN*ZValues[k]
-        SBMotion.append(Yk)
-    
-    plt.plot(SBMotion)
-    plt.show()
-    
+def test_sbm():
+    sb = sbm()
+    assert len(sb) == 1000
