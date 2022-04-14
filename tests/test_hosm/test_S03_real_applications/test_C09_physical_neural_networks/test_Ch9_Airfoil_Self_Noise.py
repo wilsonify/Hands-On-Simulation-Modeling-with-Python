@@ -5,6 +5,7 @@ import pytest
 
 from hosm.S03_real_applications.C09_physical_neural_networks.Ch9_Airfoil_Self_Noise import (
     read_ASNData,
+    split_data,
     asn,
     linear_fit,
     linear_predict,
@@ -21,7 +22,7 @@ def test_smoke():
 
 @pytest.fixture(name="ASNData")
 def test_read_ASNData():
-    ASNData = read_ASNData()
+    ASNData = read_ASNData(f"{path_to_here}/airfoil_self_noise.dat")
     return ASNData
 
 
@@ -29,8 +30,12 @@ def test_asn(ASNData):
     asn(ASNData)
 
 
-def split_data(ASNData):
+def test_split_data(ASNData):
     X_train, X_test, Y_train, Y_test = split_data(ASNData)
+    assert X_train.shape == ()
+    assert X_test.shape == ()
+    assert Y_train.shape == ()
+    assert Y_test.shape == ()
 
 
 def test_linear_fit(ASNData):

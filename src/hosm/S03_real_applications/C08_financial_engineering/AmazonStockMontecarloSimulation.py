@@ -64,8 +64,14 @@ from scipy.stats import norm
 from pandas.plotting import register_matplotlib_converters
 
 
-def read_amzn_from_csv():
-    AmznData = pd.read_csv('AMZN.csv', header=0, usecols=['Date', 'Close'], parse_dates=True, index_col='Date')
+def read_amzn_from_csv(path_to_AMZN='AMZN.csv'):
+    AmznData = pd.read_csv(
+        path_to_AMZN,
+        header=0,
+        usecols=['Date', 'Close'],
+        parse_dates=True,
+        index_col='Date'
+    )
     print(AmznData.info())
     print(AmznData.head())
     print(AmznData.tail())

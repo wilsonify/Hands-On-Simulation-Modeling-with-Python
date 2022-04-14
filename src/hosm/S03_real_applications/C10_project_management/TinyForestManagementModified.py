@@ -1,6 +1,6 @@
 import mdptoolbox.example
 
-if __name__ == "__main__":
+def tfmm():
     P, R = mdptoolbox.example.forest(3, 4, 2, 0.8)
 
     print(P[0])
@@ -22,3 +22,7 @@ if __name__ == "__main__":
     print(PolIterModel.iter)
 
     print(PolIterModel.time)
+
+
+if __name__ == "__main__":
+    tfmm()

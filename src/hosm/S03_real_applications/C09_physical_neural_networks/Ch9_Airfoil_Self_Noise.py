@@ -73,8 +73,8 @@ from sklearn.neural_network import MLPRegressor
 ASNNames = ['Frequency', 'AngleAttack', 'ChordLength', 'FSVelox', 'SSDT', 'SSP']
 
 
-def read_ASNData():
-    ASNData = pd.read_csv('airfoil_self_noise.dat', delim_whitespace=True, names=ASNNames)
+def read_ASNData(path_to_dat="airfoil_self_noise.dat"):
+    ASNData = pd.read_csv(path_to_dat, delim_whitespace=True, names=ASNNames)
     print(ASNData.head(20))
     print(ASNData.info())
     return ASNData

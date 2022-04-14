@@ -22,7 +22,7 @@ def test_smoke():
 
 
 def test_kr():
-    ASNData = read_ASNData()
+    ASNData = read_ASNData(f"{path_to_here}/airfoil_self_noise.dat")
     X_train, X_test, Y_train, Y_test = split_data(ASNData[:100])
     km = keras_fit(X_train, Y_train)
     Y_predKM = keras_predict(km, X_test)

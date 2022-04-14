@@ -22,7 +22,7 @@ def test_smoke():
 
 @pytest.fixture(name="AmznData")
 def test_read_amzn_from_csv():
-    AmznData = read_amzn_from_csv()
+    AmznData = read_amzn_from_csv(f"{path_to_here}/AMZN.csv")
     return AmznData
 
 
