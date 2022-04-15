@@ -32,10 +32,10 @@ def test_asn(ASNData):
 
 def test_split_data(ASNData):
     X_train, X_test, Y_train, Y_test = split_data(ASNData)
-    assert X_train.shape == ()
-    assert X_test.shape == ()
-    assert Y_train.shape == ()
-    assert Y_test.shape == ()
+    assert X_train.shape == (1052, 5)
+    assert X_test.shape == (451, 5)
+    assert Y_train.shape == (1052,)
+    assert Y_test.shape == (451,)
 
 
 def test_linear_fit(ASNData):
