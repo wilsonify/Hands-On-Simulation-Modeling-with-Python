@@ -1,7 +1,15 @@
 import mdptoolbox.example
 
+from hosm.S03_real_applications.C10_project_management.TinyForestManagement import forest
+
+
 def tfmm():
-    P, R = mdptoolbox.example.forest(3, 4, 2, 0.8)
+    P, R = forest(
+        S=3,
+        r1=4,
+        r2=2,
+        p=0.8
+    )
 
     print(P[0])
     print(P[1])
